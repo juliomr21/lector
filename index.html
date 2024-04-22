@@ -6,12 +6,26 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title> Ler Barcode </title>
+    <style>
+        .camara{
+            width: 250px;
+            height: 150px;
+        }
+        video{
+            width: 250px;
+            height: 150px;
+        }
+    </style>
 </head>
 
 <body>
 
+    
+    <div class="camara" >
+        <div id="camera" ></div>
+    </div>
     <div id="resultado"></div>
-    <div id="camera" style="width: 200px;height: 100px;"></div>
+    
 
     <script src="quagga.min.js"></script>
 
@@ -21,6 +35,8 @@
             inputStream: {
                 name: "Live",
                 type: "LiveStream",
+                width: 250,
+                height: 150,
                 target: document.querySelector('#camera')    // Or '#yourElement' (optional)
             },
             decoder: {
