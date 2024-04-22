@@ -8,30 +8,68 @@
     <title> Ler Barcode </title>
     <style>
         .camara{
-            width: 250px;
-            height: 150px;
+            width: 100%;
+           
         }
-        video{
+        /* video{
             width: 250px;
             height: 150px;
+        } */
+        @media (max-width:450px)
+        {
+            video{
+                width: 100%;
+                height: 150px;
+            }
+           
         }
     </style>
 </head>
 
 <body>
 
-    
+    <div id="resultado"></div>
     <div class="camara" >
         <div id="camera" ></div>
     </div>
-    <div id="resultado"></div>
     
+    <!-- <button onclick="stop()">stop</button>
+    <button onclick="start()">star</button> -->
 
     <script src="quagga.min.js"></script>
 
     <script>
 
         Quagga.init({
+            inputStream: {
+                name: "Live",
+                type: "LiveStream",
+                // width: 250,
+                // height: 150,
+                target: document.querySelector('#camera')    // Or '#yourElement' (optional)
+            },
+            decoder: {
+                readers: ["ean_reader"]
+            }
+        }, function (err) {
+            if (err) {
+                console.log(err);
+                return
+            }
+            console.log("Initialization finished. Ready to start");
+            Quagga.start();
+        });
+
+        Quagga.onDetected(function (data) {
+            console.log(data.codeResult.code);
+            document.querySelector('#resultado').innerText = data.codeResult.code;
+        });
+        function stop(){
+            Quagga.stop();
+        }
+        function start(){
+            
+            Quagga.init({
             inputStream: {
                 name: "Live",
                 type: "LiveStream",
@@ -51,10 +89,12 @@
             Quagga.start();
         });
 
-        Quagga.onDetected(function (data) {
+            Quagga.onDetected(function (data) {
             console.log(data.codeResult.code);
             document.querySelector('#resultado').innerText = data.codeResult.code;
         });
+        }
+      
 
     </script>
 
