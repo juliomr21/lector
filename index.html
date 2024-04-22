@@ -125,10 +125,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Scanner de Código de Barras</title>
 <style>
-    canvas{
-        width: 0;
-        height: 0;
-    }
+  
   #video-container {
     position: relative;
     width: 100%;
@@ -151,7 +148,7 @@
     <div id="resultado"></div>
 <div id="video-container">
   <div id="barcode-box" style="width: 95%;
-  height: 96px;
+  height: 128px;
   top: 50px;
   margin-left: 10px;
   margin-right: 10px;
@@ -177,9 +174,36 @@
       halfSample: true
     },
     decoder : {
-      readers : ["ean_reader"]
+      readers : ["ean_reader"],
+    //   debug: {
+    //     drawBoundingBox: true,
+    //     showFrequency: true,
+    //     drawScanline: true,
+    //     showPattern: true
+    //   },
+      multiple: false
     },
-    locate: true
+    locate: true,
+    numOfWorkers: 4,
+    frequency: 10,
+    locate: {
+      halfSample: true,
+      patchSize: "medium",
+      debug: {
+        showCanvas: true,
+        showPatches: true,
+        showFoundPatches: true,
+        showSkeleton: true,
+        showLabels: true,
+        showPatchLabels: true,
+        showRemainingPatchLabels: true,
+        boxFromPatches: {
+          showTransformed: true,
+          showTransformedBox: true,
+          showBB: true
+        }
+      }
+    }
   }, function(err) {
       if (err) {
           console.log(err);
