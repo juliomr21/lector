@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+<!-- <!DOCTYPE html>
 <html lang="en">
 
 <head>
@@ -48,6 +48,17 @@
                 // height: 150,
                 target: document.querySelector('#camera')    // Or '#yourElement' (optional)
             },
+            area: { // defines rectangle of the detection/localization area
+    top: "15%",    // top offset
+    right: "0%",  // right offset
+    left: "0%",   // left offset
+    bottom: "15%"  // bottom offset
+  },
+  singleChannel: false,
+            locator: {
+      patchSize: "medium", // Tamaño del parche para la búsqueda del código de barras
+      halfSample: true // Mejorar la precisión al reducir la resolución de la imagen
+    },
             decoder: {
                 readers: ["ean_reader"]
             }
@@ -100,4 +111,101 @@
 
 </body>
 
+</html> -->
+
+
+
+
+
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Scanner de Código de Barras</title>
+<style>
+    canvas{
+        width: 0;
+        height: 0;
+    }
+  #video-container {
+    position: relative;
+    width: 100%;
+    max-width: 600px; /* Anchura máxima del contenedor de video */
+    margin: 0 auto;
+  }
+  #barcode-box {
+    position: absolute;
+    border: 2px solid red; /* Color del borde del área de escaneo */
+  }
+  #start-button, #stop-button {
+    margin-top: 10px;
+    padding: 8px 16px;
+    font-size: 16px;
+    cursor: pointer;
+  }
+</style>
+</head>
+<body>
+    <div id="resultado"></div>
+<div id="video-container">
+  <div id="barcode-box" style="width: 95%;
+  height: 96px;
+  top: 50px;
+  margin-left: 10px;
+  margin-right: 10px;
+ "></div>
+</div>
+<button id="start-button">Iniciar</button>
+<button id="stop-button">Detener</button>
+
+<script src="https://cdn.jsdelivr.net/npm/quagga/dist/quagga.min.js"></script>
+<script>
+  // Configuración de Quagga
+  Quagga.init({
+    inputStream : {
+      name : "Live",
+      type : "LiveStream",
+      target: document.querySelector('#video-container'),
+      constraints: {
+        facingMode: "environment"
+      },
+    },
+    locator: {
+      patchSize: "medium",
+      halfSample: true
+    },
+    decoder : {
+      readers : ["ean_reader"]
+    },
+    locate: true
+  }, function(err) {
+      if (err) {
+          console.log(err);
+          return
+      }
+      console.log("Quagga initialization finished. Ready to start");
+      Quagga.start();
+  });
+
+  // Escuchar eventos de Quagga
+  Quagga.onDetected(function(data) {
+    var code = data.codeResult.code;
+    console.log("Barcode detected: " + code);
+    // Procesar el código de barras detectado
+    document.querySelector('#resultado').innerText = data.codeResult.code;
+  });
+
+  // Detener la detección de Quagga
+  document.getElementById('stop-button').addEventListener('click', function() {
+    Quagga.stop();
+  });
+
+  // Volver a iniciar Quagga
+  document.getElementById('start-button').addEventListener('click', function() {
+    Quagga.start();
+  });
+</script>
+</body>
 </html>
