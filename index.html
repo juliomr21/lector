@@ -1,113 +1,19 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="pt">
 
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title> Ler Barcode </title>
-    <style>
-        .camara{
-            width: 100%;
-           
-        }
-        canvas{
-            width: 0;
-            height: 0;
-        }
-        /* @media (max-width:450px)
-        {
-            video{
-                width: 100%;
-                height: 256px;
-            }
-           
-        } */
-    </style>
+    <title> Catálogos A Sós </title>
+   
 </head>
 
 <body>
 
-    <div id="resultado"></div>
-    <div class="camara" >
-        <div id="camera" ></div>
-    </div>
+    <h1>Catálogos & Protocolos </h1> 
     
-    <button onclick="stop()">stop</button>
-    <button onclick="start()">star</button>
-
-    <script src="quagga.min.js"></script>
-
-    <script>
-
-        Quagga.init({
-            inputStream: {
-                name: "Live",
-                type: "LiveStream",
-                // width: 250,
-                // height: 150,
-                target: document.querySelector('#camera')    // Or '#yourElement' (optional)
-            },
-            area: { // defines rectangle of the detection/localization area
-    top: "15%",    // top offset
-    right: "0%",  // right offset
-    left: "0%",   // left offset
-    bottom: "15%"  // bottom offset
-  },
-  singleChannel: false,
-            locator: {
-      patchSize: "medium", // Tamaño del parche para la búsqueda del código de barras
-      halfSample: true // Mejorar la precisión al reducir la resolución de la imagen
-    },
-            decoder: {
-                readers: ["ean_reader"]
-            }
-        }, function (err) {
-            if (err) {
-                console.log(err);
-                return
-            }
-            console.log("Initialization finished. Ready to start");
-            Quagga.start();
-        });
-
-        Quagga.onDetected(function (data) {
-            console.log(data.codeResult.code);
-            document.querySelector('#resultado').innerText = data.codeResult.code;
-        });
-        function stop(){
-            Quagga.stop();
-        }
-        function start(){
-            
-            Quagga.init({
-            inputStream: {
-                name: "Live",
-                type: "LiveStream",
-                width: 250,
-                height: 150,
-                target: document.querySelector('#camera')    // Or '#yourElement' (optional)
-            },
-            decoder: {
-                readers: ["ean_reader"]
-            }
-        }, function (err) {
-            if (err) {
-                console.log(err);
-                return
-            }
-            console.log("Initialization finished. Ready to start");
-            Quagga.start();
-        });
-
-            Quagga.onDetected(function (data) {
-            console.log(data.codeResult.code);
-            document.querySelector('#resultado').innerText = data.codeResult.code;
-        });
-        }
-      
-
-    </script>
+    <a href="assets/catalogo dermosex.pdf" download>Descargar Catálogo</a>
+    <a href="assets/protocolo dermosex.pdf" download>Descargar Protocolo</a>
 
 </body>
 
